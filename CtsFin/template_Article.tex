@@ -1,0 +1,29 @@
+\documentclass[]{article}
+
+\usepackage{amsfonts}
+
+%opening
+\title{Continuous Finance HW1}
+\author{Lisa He}
+
+\begin{document}
+
+\maketitle {}
+
+
+\section{Problem 4}
+$\Delta B_{i} \sim N(0, t_{i+1}-t{i})$ 
+
+So,  $(\Delta B_{i}^{2}) = var(\Delta B_{i}) = \Delta t_{i}$
+
+$\mathbb{E} (\Delta B_{i}^{4}) = 3var(\Delta B_{i})^{2} = 3(\Delta t_{i} )^{2}$
+
+Therefore, \\ $LHS = 
+\mathbb{E} [(\Delta B_{i})^{4}-2(\Delta B_{i})^{2}\Delta t_{i}+(\Delta t_{i})^{2}\parallel F_{t_{i}}] \\
+= 3(\Delta t_{i} )^{2}-2(\Delta t_{i} )^{2}+ (\Delta t_{i} )^{2} \\
+= 2(\Delta t_{i} )^{2}\\
+= RHS$
+\\
+
+$\[ p_t(x, y) = f_t(y - x) =\frac{1}{\sigma \sqrt{2 \pi t}} \exp\left[-\frac{1}{2 \sigma^2 t} (y - x - \mu t)^2\right], \quad t \in (0, \infty); \; x, \, y \in \R \]$
+\end{document}

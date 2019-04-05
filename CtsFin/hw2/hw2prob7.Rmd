@@ -1,0 +1,102 @@
+---
+title: "Hw2prob7"
+author: "Lisa He"
+date: "2/20/2019"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(lattice)
+library(foreign)
+library(MASS)
+library(car)
+require(stats)
+require(stats4)
+library(KernSmooth)
+library(fastICA)
+library(cluster)
+library(leaps)
+library(mgcv)
+library(rpart)
+library(pan)
+library(mgcv)
+library(DAAG)
+library("TTR")
+library(tis)
+require("datasets")
+require(graphics)
+library("forecast")
+require(astsa)
+library(xtable)
+library(stats)
+library(readxl)
+library(quantmod)
+library(e1071)
+library(tseries)
+library(robustbase)
+library(sandwich)
+library(plotrix)
+library(readr)
+library(dplyr)
+library(data.table)
+```
+
+
+```{r a}
+r<- 0.05
+sig <-.25
+K<-100
+S0<-100
+mT<-1/4
+d1 <- (log(S0/K)+(r+sig**2/2)*mT)/(sig*sqrt(mT))
+d2<- d1 - sig*sqrt(mT)
+C<- S0*pnorm(d1)-K*exp(-r*mT)*pnorm(d2)
+```
+C is 5.5984
+
+```{r b}
+maxN <-1000000
+mcest <-c()
+for (N in seq(from=1000,to=maxN+1000,by=10000)){
+ST<- S0*exp((r-.5*sig^2)*mT+sig*rnorm(N,0,sqrt(mT))) - K
+sumC <-0
+for( i in 1:N){
+  if (ST[i] >0){
+    sumC <- sumC + ST[i]*exp(-r*mT)
+  }
+}
+mcest[N]<- sumC/N
+}
+```
+
+```{r b2}
+for (N in seq(from=1000,to=maxN+1000,by=10000)){
+ if (mcest[N]>5.5884&mcest[N]<5.6084) {
+   print(N)
+ }
+}
+```
+
+We need at least 71000 simulations to get a close enough estimate.
+
+```{r c}
+N<-71000
+mcestc <-c()
+ST<- S0*exp((r-.5*sig^2)*mT+sig*rnorm(N,0,sqrt(mT))) - K
+sumC <-0
+for( i in 1:N){
+  if (ST[i] >0){
+    sumC <- sumC + ST[i]*exp(-r*mT)
+  }
+  if (ST[i]<0){
+    ST[i]<-0
+  }
+}
+mcestc<- sumC/N
+se<- sqrt(var(ST)/N)
+print(se)
+```
+when doing 710000 simulations, the standard error is 0.03154979
